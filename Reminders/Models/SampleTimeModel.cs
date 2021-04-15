@@ -12,16 +12,19 @@ namespace Reminders.Models
         public int Minute { get; set; }
         public int Second { get; set; }
         public int Id { get; set; }
+        public string Description { get; set; }
+
         public SampleTimeModel()
         {
 
         }
 
-        public SampleTimeModel(int hour, int minute, int second)
+        public SampleTimeModel(int hour, int minute, int second, string description,int id)
         {
             Hour = hour;
             Minute = minute;
             Second = second;
+            Id = id;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Reminders.Models.SampleTimeModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,19 +8,55 @@
 </div>
 
 
+@foreach (var alarm in Model)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@alarm.Hour:@FormattedMinute(alarm.Minute)</h5>
+            <h6 class="card-subtitle mb-2 text-muted" id="timeTillEvent">@GetRemainingTime(alarm)</h6>
+            <p class="card-text">@alarm.Description</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+}
+
 
 
 <script>
 
-    console.log("test");
-
-    function updateTime()
-    { 
+    function updateTime() {
         var d = new Date().toLocaleTimeString();
         var ele = document.getElementById("myTime");
         ele.innerHTML = `The time is ${d}`;
     }
 
+    function updateTimeTillEvent() {
+        var ele = document.getElementById("timeTillEvent");
+
+    }
+
     setInterval(updateTime, 100);
 
 </script>
+
+@functions
+{
+    string GetRemainingTime(Reminders.Models.SampleTimeModel alarm)
+    {
+        DateTime d1 = DateTime.Now;
+        DateTime d2 = new DateTime(d1.Year, d1.Month, d1.Day, alarm.Hour, alarm.Minute, 0);
+        TimeSpan diff = d2 - d1;
+        string res = $"{diff.Hours} hours and {diff.Minutes} minutes left";
+        return res;
+    }
+
+    string FormattedMinute(int minutes)
+    {
+        if (minutes >= 10)
+            return minutes.ToString();
+
+        return "0" + minutes.ToString();
+
+    }
+}

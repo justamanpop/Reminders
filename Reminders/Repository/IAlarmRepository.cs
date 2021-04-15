@@ -10,7 +10,7 @@ namespace Reminders.Repository
     public interface IAlarmRepository
     {
         List<SampleTimeModel> GetAll();
-        SampleTimeModel Get();
-        bool Add(int hour, int minute);
+        SampleTimeModel Get(int id);
+        bool Add(int hour, int minute,string description);
     }
 }
