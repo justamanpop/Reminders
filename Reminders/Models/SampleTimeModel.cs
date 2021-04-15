@@ -11,7 +11,7 @@ namespace Reminders.Models
         public int Hour { get; set; }
         public int Minute { get; set; }
         public int Second { get; set; }
-
+        public int Id { get; set; }
         public SampleTimeModel()
         {
 
