@@ -20,6 +20,7 @@ namespace Reminders.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
@@ -33,5 +34,6 @@ namespace Reminders.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
