@@ -4,27 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reminders.Models
+namespace Reminders.ViewModels
 {
-    public class SampleTimeModel
+    public class SampleTimeViewModel
     {
         public int Hour { get; set; }
         public int Minute { get; set; }
-        public int Second { get; set; }
-        public int Id { get; set; }
         public string Description { get; set; }
 
-        public SampleTimeModel()
+        public SampleTimeViewModel()
         {
 
         }
 
-        public SampleTimeModel(int hour, int minute, int second, string description,int id)
+        public SampleTimeViewModel(int hour, int minute, string description)
         {
             Hour = hour;
             Minute = minute;
-            Second = second;
-            Id = id;
             Description = description;
         }
     }

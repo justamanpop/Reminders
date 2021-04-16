@@ -26,6 +26,9 @@ namespace Reminders
             services.AddControllersWithViews();
             services.Add(
                 new ServiceDescriptor(typeof(IAlarmRepository), typeof(InMemoryAlarmRepository),ServiceLifetime.Singleton));
+            
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

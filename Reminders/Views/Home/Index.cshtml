@@ -1,4 +1,4 @@
-﻿@model List<Reminders.Models.SampleTimeModel>
+﻿@model List<Reminders.ViewModels.SampleTimeViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -21,6 +21,11 @@
     </div>
 }
 
+<br/>
+
+<div>
+    <button class="btn btn-sm btn-primary" action="Add">Add</button>
+</div>
 
 
 <script>
@@ -42,12 +47,23 @@
 
 @functions
 {
-    string GetRemainingTime(Reminders.Models.SampleTimeModel alarm)
+    string GetRemainingTime(Reminders.ViewModels.SampleTimeViewModel alarm)
     {
         DateTime d1 = DateTime.Now;
         DateTime d2 = new DateTime(d1.Year, d1.Month, d1.Day, alarm.Hour, alarm.Minute, 0);
         TimeSpan diff = d2 - d1;
-        string res = $"{diff.Hours} hours and {diff.Minutes} minutes left";
+
+        string hourText = "hours";
+        string minuteText = "minutes";
+
+        if(diff.Hours==1)
+            hourText = "hour";
+
+        if (diff.Minutes == 1)
+            minuteText = "minute";
+
+
+        string res = $"{diff.Hours} {hourText} and {diff.Minutes} {minuteText} left";
         return res;
     }
 
