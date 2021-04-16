@@ -12,7 +12,7 @@
 {
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">@alarm.Hour:@FormattedMinute(alarm.Minute)</h5>
+            <h5 class="card-title">@alarm.Time.Hour:@FormattedMinute(alarm.Time.Minute)</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="timeTillEvent">@GetRemainingTime(alarm)</h6>
             <p class="card-text">@alarm.Description</p>
             <a href="#" class="card-link">Card link</a>
@@ -24,7 +24,7 @@
 <br/>
 
 <div>
-    <button class="btn btn-sm btn-primary" action="Add">Add</button>
+    <a class="btn btn-sm btn-primary" asp-action="Add">Add</a>
 </div>
 
 
@@ -50,8 +50,7 @@
     string GetRemainingTime(Reminders.ViewModels.SampleTimeViewModel alarm)
     {
         DateTime d1 = DateTime.Now;
-        DateTime d2 = new DateTime(d1.Year, d1.Month, d1.Day, alarm.Hour, alarm.Minute, 0);
-        TimeSpan diff = d2 - d1;
+        TimeSpan diff = alarm.Time - d1;
 
         string hourText = "hours";
         string minuteText = "minutes";

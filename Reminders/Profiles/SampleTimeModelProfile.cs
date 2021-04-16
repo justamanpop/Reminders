@@ -13,8 +13,12 @@ namespace Reminders.Profiles
     {
         public SampleTimeModelProfile()
         {
-            CreateMap<SampleTimeModel, SampleTimeViewModel>();
-            CreateMap<SampleTimeViewModel, SampleTimeModel>();
+            CreateMap<SampleTimeModel, SampleTimeViewModel>()
+                .ForMember(dest=>dest.Time, opt=> opt.MapFrom(src=> new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,src.Hour,src.Minute,0)));
+
+            CreateMap<SampleTimeViewModel, SampleTimeModel>()
+                .ForMember(dest=>dest.Hour, opt=>opt.MapFrom(src=>src.Time.Hour))
+                .ForMember(dest => dest.Minute, opt => opt.MapFrom(src => src.Time.Minute));
         }
     }
 }

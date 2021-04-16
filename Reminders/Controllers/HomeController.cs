@@ -38,12 +38,13 @@ namespace Reminders.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Add(SampleTimeViewModel alarm)
-        //{
-        //    alarmRepository.Add()
-        //    return View();
-        //}
+        [HttpPost]
+        public IActionResult Add(SampleTimeViewModel alarm)
+        {
+            var alarmToAdd = mapper.Map<SampleTimeModel>(alarm);
+            alarmRepository.Add(alarmToAdd);
+            return RedirectToAction("Index");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

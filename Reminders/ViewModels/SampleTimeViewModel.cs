@@ -8,19 +8,17 @@ namespace Reminders.ViewModels
 {
     public class SampleTimeViewModel
     {
-        public int Hour { get; set; }
-        public int Minute { get; set; }
         public string Description { get; set; }
+        public DateTime Time { get; set; }
 
         public SampleTimeViewModel()
         {
 
         }
 
-        public SampleTimeViewModel(int hour, int minute, string description)
+        public SampleTimeViewModel(DateTime time, string description)
         {
-            Hour = hour;
-            Minute = minute;
+            Time = time;
             Description = description;
         }
     }
