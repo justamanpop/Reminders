@@ -13,24 +13,26 @@ namespace Reminders.Repository
 
         public InMemoryAlarmRepository()
         {
-            Add(20, 20, "Buy orange juice");
-            Add(18, 40, "Walk the dog");
-            Add(21, 00, "Watch the match");
-            Add(22, 15, "Sleep");
+            Add(new SampleTimeModel { Hour = 20, Minute = 20, Description="Buy orange juice" });
+            Add(new SampleTimeModel { Hour = 18, Minute = 40, Description = "Walk the dog" });
+            Add(new SampleTimeModel { Hour = 21, Minute = 00, Description = "Watch the match" });
+            Add(new SampleTimeModel { Hour = 22, Minute = 15, Description = "Sleep" });
         }
 
         public List<SampleTimeModel> Alarms { get; set; } = new List<SampleTimeModel>();
 
-        public bool Add(int hour, int minute, string description)
+        public bool Add(SampleTimeModel alarm)
         {
             DateTime currTime = DateTime.Now;
 
-            if (hour < currTime.Hour || (hour == currTime.Hour && minute <= currTime.Minute))
+            if (alarm.Hour < currTime.Hour || (alarm.Hour == currTime.Hour && alarm.Minute <= currTime.Minute))
             {
                 return false;
             }
 
-            Alarms.Add(new SampleTimeModel(hour, minute, 0, description, lastId + 1));
+            alarm.Id = lastId + 1;
+
+            Alarms.Add(alarm);
             lastId += 1;
             return true;
         }

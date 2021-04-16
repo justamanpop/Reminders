@@ -14,6 +14,7 @@ namespace Reminders.Profiles
         public SampleTimeModelProfile()
         {
             CreateMap<SampleTimeModel, SampleTimeViewModel>();
+            CreateMap<SampleTimeViewModel, SampleTimeModel>();
         }
     }
 }

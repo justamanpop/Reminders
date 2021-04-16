@@ -32,15 +32,16 @@ namespace Reminders.Controllers
             return View(alarmViewModels);
         }
 
-        //[HttpGet]
-        //public IActionResult Add()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
 
         //[HttpPost]
-        //public IActionResult Add()
+        //public IActionResult Add(SampleTimeViewModel alarm)
         //{
+        //    alarmRepository.Add()
         //    return View();
         //}
 
