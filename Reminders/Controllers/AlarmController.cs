@@ -39,5 +39,24 @@ namespace Reminders.Controllers
 
             return View();
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Edit(int id)
+        {
+            return View(id);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(SampleTimeViewModel alarm)
+        {
+            var alarmToAdd = mapper.Map<SampleTimeModel>(alarm);
+
+            alarmRepository.Add(alarmToAdd);
+
+            if (ModelState.IsValid)
+                return RedirectToAction("Index", "Home");
+
+            return View();
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Reminders.ViewModels
     [DateAndTimeValidationAttribute]
     public class SampleTimeViewModel
     {
+        public int Id { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]

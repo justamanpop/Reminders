@@ -15,7 +15,7 @@
             <h5 class="card-title">@alarm.Time.Hour:@FormattedMinute(alarm.Time.Minute)</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="timeTillEvent">@GetRemainingTime(alarm)</h6>
             <p class="card-text">@alarm.Description</p>
-            <a href="#" class="card-link">Card link</a>
+            <a asp-controller="Alarm" asp-action="Edit" asp-route-id="@alarm.Id" class="card-link">Edit</a>
             <a href="#" class="card-link">Another link</a>
         </div>
     </div>
