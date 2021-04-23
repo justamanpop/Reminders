@@ -32,9 +32,9 @@ namespace Reminders.Controllers
         {
             var alarmToAdd = mapper.Map<SampleTimeModel>(alarm);
             
-            bool result=alarmRepository.Add(alarmToAdd);
+            alarmRepository.Add(alarmToAdd);
             
-            if(result)
+            if(ModelState.IsValid)
                 return RedirectToAction("Index","Home");
 
             return View();

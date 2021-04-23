@@ -29,11 +29,6 @@ namespace Reminders.Repository
         {
             DateTime currTime = DateTime.Now;
 
-            if (alarm.Hour < currTime.Hour || (alarm.Hour == currTime.Hour && alarm.Minute <= currTime.Minute))
-            {
-                return false;
-            }
-
             alarm.Id = lastId + 1;
 
             Alarms.Add(alarm);

@@ -9,15 +9,15 @@ namespace Reminders.Attributes
 {
     public class DateAndTimeValidationAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             DateTime now = DateTime.Now;
 
             DateTime inputDate = ((SampleTimeViewModel)value).Date;
             DateTime inputTime = ((SampleTimeViewModel)value).Time;
 
-            if (inputDate < now)
-                return false;
+            if (inputDate < now.Date)
+                return new ValidationResult("Date entered is before today's date.");
 
             //temp will hold today's date but the time is alarm's time
             DateTime temp = DateTime.Now.Date;
@@ -27,9 +27,9 @@ namespace Reminders.Attributes
             temp = temp.AddSeconds(inputTime.Second);
 
             if (inputDate.Date == now.Date && temp < now)
-                return false;
+                return new ValidationResult("Time entered is before current time.");
 
-            return true;
+            return ValidationResult.Success;
         }
     }
 }

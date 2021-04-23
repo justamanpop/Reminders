@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reminders.Attributes;
 
 namespace Reminders.ViewModels
 {
+    [DateAndTimeValidationAttribute]
     public class SampleTimeViewModel
     {
         [Required]
