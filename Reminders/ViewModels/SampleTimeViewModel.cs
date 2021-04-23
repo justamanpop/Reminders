@@ -13,16 +13,18 @@ namespace Reminders.ViewModels
         public string Description { get; set; }
         [Required]
         public DateTime Time { get; set; }
+        [Required]
         public DateTime Date { get; set; }
         public SampleTimeViewModel()
         {
 
         }
 
-        public SampleTimeViewModel(DateTime time, string description)
+        public SampleTimeViewModel(DateTime time, DateTime date, string description)
         {
             Time = time;
             Description = description;
+            Date = date;
         }
     }
 }
