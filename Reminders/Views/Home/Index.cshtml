@@ -50,22 +50,53 @@
     string GetRemainingTime(Reminders.ViewModels.SampleTimeViewModel alarm)
     {
         DateTime d1 = DateTime.Now;
-        TimeSpan diff = alarm.Time - d1;
 
-        string hourText = "hours";
-        string minuteText = "minutes";
+        DateTime dueTime = alarm.Date;
+        dueTime = dueTime.AddHours(alarm.Time.Hour);
+        dueTime = dueTime.AddMinutes(alarm.Time.Minute);
+        dueTime = dueTime.AddSeconds(alarm.Time.Second);
 
-        if(diff.Hours==1)
-            hourText = "hour";
+        TimeSpan diff = dueTime - d1;
 
-        if (diff.Minutes == 1)
-            minuteText = "minute";
+        //if alarm is due today
+        if (d1.Date == alarm.Date.Date)
+        {
+
+            string hourText = "hours";
+            string minuteText = "minutes";
+
+            if (diff.Hours == 1)
+                hourText = "hour";
+
+            if (diff.Minutes == 1)
+                minuteText = "minute";
 
 
-        string res = $"{diff.Hours} {hourText} and {diff.Minutes} {minuteText} left";
-        return res;
+            string res = $"{diff.Hours} {hourText} and {diff.Minutes} {minuteText} left";
+            return res;
+        }
+
+        //if alarm is due within 31 days
+        if((alarm.Date.Date - d1.Date.Date).TotalDays <=31)
+        {
+            string dayText = "days";
+            string hourText = "hours";
+
+            if (diff.Days == 1)
+                dayText = "day";
+
+            if (diff.Hours == 1)
+                hourText = "hour";
+
+
+            string res = $"{diff.Days} {dayText} and {diff.Hours} {hourText} left";
+            return res;
+        }
+
+        return "difference too long, not implemented for this yet";
     }
 
+    //display 0x instead of just x if x is <10, like 05 instead of 5
     string FormattedMinute(int minutes)
     {
         if (minutes >= 10)
