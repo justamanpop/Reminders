@@ -43,20 +43,24 @@ namespace Reminders.Controllers
         [HttpGet("{id}")]
         public IActionResult Edit(int id)
         {
-            return View(id);
+            var alarmEntity = alarmRepository.Get(id);
+
+            var alarmVM = mapper.Map<SampleTimeViewModel>(alarmEntity);
+
+            return View(alarmVM);
         }
 
         [HttpPost]
         public IActionResult Edit(SampleTimeViewModel alarm)
         {
-            var alarmToAdd = mapper.Map<SampleTimeModel>(alarm);
+            var alarmToUpdate = mapper.Map<SampleTimeModel>(alarm);
 
-            alarmRepository.Add(alarmToAdd);
+            bool res=alarmRepository.Update(alarmToUpdate);
 
-            if (ModelState.IsValid)
+            if (res)
                 return RedirectToAction("Index", "Home");
 
-            return View();
+            return View("Error");
         }
     }
 }

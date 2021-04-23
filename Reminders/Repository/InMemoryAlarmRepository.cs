@@ -49,6 +49,10 @@ namespace Reminders.Repository
         public bool Update(SampleTimeModel newAlarm)
         {
             var alarm= Alarms.FirstOrDefault(a => a.Id == newAlarm.Id);
+
+            if (alarm == null)
+                return false;
+
             alarm = newAlarm;
             return true;
         }
