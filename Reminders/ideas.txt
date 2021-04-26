@@ -1,0 +1,11 @@
+﻿in the reminder website, move time of request coming in from VM to hidden html fields so i can use javascript to 
+update time left instead of c#, as otherwise if screen is left open, no dynamic update. much later though, as this is
+luxury task, and not core functionality. maybe look up how to do periodic function call in c# razor and implement that 
+instead?
+
+doing push notif dev on personal computer as node has some permission issues on this work laptop
+
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-3.1&tabs=visual-studio#timed-background-tasks
+https://docs.microsoft.com/en-us/dotnet/api/system.timers.timer?redirectedfrom=MSDN&view=net-5.0
+
+links for periodic c# functions, intended to periodically update time left for reminder on screen on razor
