@@ -9,3 +9,9 @@ https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?v
 https://docs.microsoft.com/en-us/dotnet/api/system.timers.timer?redirectedfrom=MSDN&view=net-5.0
 
 links for periodic c# functions, intended to periodically update time left for reminder on screen on razor
+
+Public Key:
+BN9IzogV3EZVpZgMLqITu_lZFfXeTcuWUkBnwnKymLo1Y1NF6j8n-y4qVqCC3m4BsjlITVxOU6i9f73RChvUuaw
+
+Private Key:
+8rjwr-402anjWaiehu0C4tuQ5jlq6_3gYQdtMq8SUak
