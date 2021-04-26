@@ -8,6 +8,7 @@
 </div>
 
 
+
 @foreach (var alarm in Model)
 {
     <div class="card" style="width: 18rem;">
@@ -29,7 +30,6 @@
 
 
 <script>
-
     function updateTime() {
         var d = new Date().toLocaleTimeString();
         var ele = document.getElementById("myTime");
@@ -44,6 +44,8 @@
     setInterval(updateTime, 100);
 
 </script>
+
+<script src="~/js/Main.js"></script>
 
 @functions
 {
