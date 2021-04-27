@@ -7,6 +7,27 @@
     <h1 class="display-4" id="myTime">Welcome</h1>
 </div>
 
+<br />
+
+<div id="GiveAccess" style="display:none;">
+    Click to allow this website to notify you on desktop:
+    <button id="PromptForAccessBtn" class="btn btn-primary btn-dark">Prompt</button>
+</div>
+<div id="NoSupport" style="display:none;">
+    Your browser does not support Push Notifications or you have blocked notifications
+</div>
+<form asp-action="Subscription" id="form" style="display:none;">
+    <label for="client">Your name: </label>
+    <input id="client" name="client" /><br />
+
+    <input id="endpoint" name="endpoint" hidden />
+    <input id="p256dh" name="p256dh" hidden />
+    <input id="auth" name="auth" hidden />
+
+    <button type="submit" class="btn btn-dark">Subscribe</button>
+</form>
+
+<br />
 
 
 @foreach (var alarm in Model)
@@ -22,89 +43,170 @@
     </div>
 }
 
-<br/>
+<br />
 
 <div>
     <a class="btn btn-sm btn-primary" asp-controller="Alarm" asp-action="Add">Add</a>
 </div>
 
 
-<script>
-    function updateTime() {
-        var d = new Date().toLocaleTimeString();
-        var ele = document.getElementById("myTime");
-        ele.innerHTML = `The time is ${d}`;
-    }
 
-    function updateTimeTillEvent() {
-        var ele = document.getElementById("timeTillEvent");
-
-    }
-
-    setInterval(updateTime, 100);
-
-</script>
-
-<script src="~/js/Main.js"></script>
-
-@functions
+@section Scripts
 {
-    string GetRemainingTime(Reminders.ViewModels.SampleTimeViewModel alarm)
-    {
-        DateTime d1 = DateTime.Now;
-
-        DateTime dueTime = alarm.Date;
-        dueTime = dueTime.AddHours(alarm.Time.Hour);
-        dueTime = dueTime.AddMinutes(alarm.Time.Minute);
-        dueTime = dueTime.AddSeconds(alarm.Time.Second);
-
-        TimeSpan diff = dueTime - d1;
-
-        //if alarm is due today
-        if (d1.Date == alarm.Date.Date)
-        {
-
-            string hourText = "hours";
-            string minuteText = "minutes";
-
-            if (diff.Hours == 1)
-                hourText = "hour";
-
-            if (diff.Minutes == 1)
-                minuteText = "minute";
-
-
-            string res = $"{diff.Hours} {hourText} and {diff.Minutes} {minuteText} left";
-            return res;
+    <script>
+        function updateTime() {
+            var d = new Date().toLocaleTimeString();
+            var ele = document.getElementById("myTime");
+            ele.innerHTML = `The time is ${d}`;
         }
 
-        //if alarm is due within 31 days
-        if((alarm.Date.Date - d1.Date.Date).TotalDays <=31)
-        {
-            string dayText = "days";
-            string hourText = "hours";
+        function updateTimeTillEvent() {
+            var ele = document.getElementById("timeTillEvent");
 
-            if (diff.Days == 1)
-                dayText = "day";
-
-            if (diff.Hours == 1)
-                hourText = "hour";
-
-
-            string res = $"{diff.Days} {dayText} and {diff.Hours} {hourText} left";
-            return res;
         }
 
-        return "difference too long, not implemented for this yet";
+        setInterval(updateTime, 100);
+
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/js/ServiceWorker.js")
+                    .then((reg) => {
+                        if (Notification.permission === "granted") {
+                            $("#form").show();
+                            getSubscription(reg);
+                        }
+
+                        else if (Notification.permission === "blocked") {
+                            $("#NoSupport").show();
+                        }
+
+                        else {
+                            $("#GiveAccess").show();
+                            $("#PromptForAccessBtn").click(() => requestNotificationAccess(reg));
+                        }
+                    });
+            });
     }
 
-    //display 0x instead of just x if x is <10, like 05 instead of 5
-    string FormattedMinute(int minutes)
-    {
-        if (minutes >= 10)
-            return minutes.ToString();
+        else {
+            $("NoSupport").show();
+        }
 
-        return "0" + minutes.ToString();
 
+        function requestNotificationAccess(reg) {
+            Notification.requestPermission(function (status) {
+                $("#GiveAccess").hide();
+                if (status == "granted") {
+                    $("#form").show();
+                    getSubscription(reg);
+                }
+
+                else {
+                    $("#NoSupport").show();
+                }
+            });
+        }
+
+        function getSubscription(reg) {
+            reg.pushManager.getSubscription().then(function (sub) {
+                if (sub === null) {
+                    reg.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: "@ViewBag.applicationServerKey"
+                    }).then(function sub() {
+                        fillSubscribeFields(sub);
+                    }).catch(function (e) {
+                        console.error("Unable to subscribe to push", e);
+                    });
+                }
+
+                else {
+                    fillSubscribeFields(sub);
+                }
+            });
+        }
+
+        function fillSubscribeFields(sub) {
+            $("#endpoint").val(sub.endpoint);
+            $("#p256dh").val(arrayBufferToBase64(sub.getKey("p256dh")));
+            $("#auth").val(arrayBufferToBase64(sub.getKey("auth")));
+        }
+
+        function arrayBufferToBase64(buffer) {
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        }
+    </script>
+
+    @functions
+{
+        string GetRemainingTime(Reminders.ViewModels.SampleTimeViewModel alarm)
+        {
+            DateTime d1 = DateTime.Now;
+
+            DateTime dueTime = alarm.Date;
+            dueTime = dueTime.AddHours(alarm.Time.Hour);
+            dueTime = dueTime.AddMinutes(alarm.Time.Minute);
+            dueTime = dueTime.AddSeconds(alarm.Time.Second);
+
+            TimeSpan diff = dueTime - d1;
+
+            //if alarm is due today
+            if (d1.Date == alarm.Date.Date)
+            {
+
+                string hourText = "hours";
+                string minuteText = "minutes";
+
+                if (diff.Hours == 1)
+                    hourText = "hour";
+
+                if (diff.Minutes == 1)
+                    minuteText = "minute";
+
+
+                string res = $"{diff.Hours} {hourText} and {diff.Minutes} {minuteText} left";
+                return res;
+            }
+
+            //if alarm is due within 31 days
+            if ((alarm.Date.Date - d1.Date.Date).TotalDays <= 31)
+            {
+                string dayText = "days";
+                string hourText = "hours";
+
+                if (diff.Days == 1)
+                    dayText = "day";
+
+                if (diff.Hours == 1)
+                    hourText = "hour";
+
+
+                string res = $"{diff.Days} {dayText} and {diff.Hours} {hourText} left";
+                return res;
+            }
+
+            return "difference too long, not implemented for this yet";
+        }
+
+        //display 0x instead of just x if x is <10, like 05 instead of 5
+        string FormattedMinute(int minutes)
+        {
+            if (minutes >= 10)
+                return minutes.ToString();
+
+            return "0" + minutes.ToString();
+
+        }
     }
 }
