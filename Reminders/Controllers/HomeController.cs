@@ -20,13 +20,15 @@ namespace Reminders.Controllers
         private readonly IAlarmRepository alarmRepository;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
+        private readonly ISubscriptionRepository subscriptionRepository;
 
-        public HomeController(ILogger<HomeController> logger, IAlarmRepository alarmRepository, IMapper mapper, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger, IAlarmRepository alarmRepository, IMapper mapper, IConfiguration configuration, ISubscriptionRepository subscriptionRepository)
         {
             _logger = logger;
             this.alarmRepository = alarmRepository;
             this.mapper = mapper;
             this.configuration = configuration;
+            this.subscriptionRepository = subscriptionRepository;
         }
 
         public IActionResult Index()
@@ -41,7 +43,10 @@ namespace Reminders.Controllers
         public IActionResult Subscription(string client, string endpoint, string p256dh, string auth)
         {
             if (client == null)
-                return BadRequest("No client name entered");
+                return BadRequest("No client name was entered.");
+
+            if (subscriptionRepository.GetClientNames().Contains(client))
+                return BadRequest("Client name already in use.");
 
             var sub = new PushSubscription(endpoint, p256dh, auth);
 
