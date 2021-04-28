@@ -9,7 +9,7 @@
 
 <br />
 <button id="notifyBtn" class="btn btn-lg btn-primary">Allow website to notify you</button>
-<br/>
+<br />
 <br />
 
 
@@ -17,7 +17,7 @@
 {
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">@alarm.Time.Hour:@FormattedMinute(alarm.Time.Minute)</h5>
+            <h5 class="card-title">@alarm.Time.Hour:@FormattedMinute(alarm.Time.Minute)</h5> <h3>@FormattedDate(alarm)</h3>
             <h6 class="card-subtitle mb-2 text-muted" id="timeTillEvent">@GetRemainingTime(alarm)</h6>
             <p class="card-text">@alarm.Description</p>
             <a asp-controller="Alarm" asp-action="Edit" asp-route-id="@alarm.Id" class="card-link">Edit</a>
@@ -26,13 +26,13 @@
     </div>
 }
 
-<br/>
+<br />
 
 <div>
     <a class="btn btn-sm btn-primary" asp-controller="Alarm" asp-action="Add">Add</a>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="~/js/notifications.js"></script>
@@ -71,7 +71,7 @@
         }
 
         //if alarm is due within 31 days
-        if((alarm.Date.Date - d1.Date.Date).TotalDays <=31)
+        if ((alarm.Date.Date - d1.Date.Date).TotalDays <= 31)
         {
             string dayText = "days";
             string hourText = "hours";
@@ -98,5 +98,26 @@
 
         return "0" + minutes.ToString();
 
+    }
+
+    //display date in dd/mm/yyyy, but return text 'today' if the date is today, and tomorrow, if date is tomorrow.
+    string FormattedDate(Reminders.ViewModels.SampleTimeViewModel alarm)
+    {
+        DateTime now = DateTime.Now;
+
+        if(alarm.Date.Date==now.Date.Date)
+        {
+            return "Today";
+        }
+
+        else if (alarm.Date.Date == now.Date.Date.AddDays(1))
+        {
+            return "Tomorrow";
+        }
+
+        else
+        {
+            return $"{alarm.Date.Day}/{alarm.Date.Month}/{alarm.Date.Year}";
+        }
     }
 }

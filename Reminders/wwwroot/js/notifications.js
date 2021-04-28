@@ -1,9 +1,10 @@
 ﻿function showNotification() {
 
     let $descriptions = $(".card-text");
-
+    let now= Date
     $('.card-title').each(async function (index) {
         await playSound("http://localhost:14919/js/notification_sound.mp3");
+
         const notification = new Notification("Alarm", {
             body: $($descriptions[index]).text()
         });
