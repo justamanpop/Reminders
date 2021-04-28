@@ -9,3 +9,6 @@ https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?v
 https://docs.microsoft.com/en-us/dotnet/api/system.timers.timer?redirectedfrom=MSDN&view=net-5.0
 
 links for periodic c# functions, intended to periodically update time left for reminder on screen on razor
+
+
+migrate getREmainingTime from C# to js, or do above to solve the problem.

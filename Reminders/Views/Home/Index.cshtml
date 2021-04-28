@@ -7,6 +7,11 @@
     <h1 class="display-4" id="myTime">Welcome</h1>
 </div>
 
+<br />
+<button id="notifyBtn" class="btn btn-lg btn-primary">Allow website to notify you</button>
+<br/>
+<br />
+
 
 @foreach (var alarm in Model)
 {
@@ -27,23 +32,12 @@
     <a class="btn btn-sm btn-primary" asp-controller="Alarm" asp-action="Add">Add</a>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-<script>
+<script src="~/js/notifications.js"></script>
 
-    function updateTime() {
-        var d = new Date().toLocaleTimeString();
-        var ele = document.getElementById("myTime");
-        ele.innerHTML = `The time is ${d}`;
-    }
-
-    function updateTimeTillEvent() {
-        var ele = document.getElementById("timeTillEvent");
-
-    }
-
-    setInterval(updateTime, 100);
-
-</script>
+<script src="~/js/currentTimeUpdate.js"></script>
 
 @functions
 {
