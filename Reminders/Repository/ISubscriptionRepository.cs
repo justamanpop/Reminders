@@ -12,5 +12,6 @@ namespace Reminders.Repository
         public List<string> GetClientNames();
         public Task<bool> Add(SubscriptionModel model);
         public Task<bool> Remove(SubscriptionModel model);
+        public SubscriptionModel GetSubscription(string client);
     }
 }

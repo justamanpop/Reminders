@@ -32,6 +32,18 @@ namespace Reminders.Repository
 
         }
 
+        public SubscriptionModel GetSubscription(string client)
+        {
+            var res = from model in context.SubscriptionModels
+                         where model.Client== client
+                         select model;
+
+            if (res.Count() == 0)
+                return null;
+
+            return res.ToList()[0];
+        }
+
         public async Task<bool> Remove(SubscriptionModel model)
         {
             context.Remove(model);

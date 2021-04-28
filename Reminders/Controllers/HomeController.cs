@@ -40,7 +40,7 @@ namespace Reminders.Controllers
         }
 
         [HttpPost]
-        public IActionResult Subscription(string client, string endpoint, string p256dh, string auth)
+        public async Task<IActionResult> Subscription(string client, string endpoint, string p256dh, string auth)
         {
             if (client == null)
                 return BadRequest("No client name was entered.");
@@ -48,10 +48,57 @@ namespace Reminders.Controllers
             if (subscriptionRepository.GetClientNames().Contains(client))
                 return BadRequest("Client name already in use.");
 
-            var sub = new PushSubscription(endpoint, p256dh, auth);
+            var sub = new SubscriptionModel(endpoint, p256dh, auth, client);
 
-            throw new NotImplementedException();
+            bool res= await subscriptionRepository.Add(sub);
+
+            if (!res)
+                return StatusCode(500);
+
+            return View("Notify", subscriptionRepository.GetClientNames());
         }
+
+        public IActionResult Notify()
+        {
+            return View(subscriptionRepository.GetClientNames());
+        }
+
+        [HttpPost]
+        public IActionResult Notify(string message, string client)
+        {
+            if(client==null)
+            {
+                return BadRequest("No client name was chosen");
+            }
+
+            var sub = subscriptionRepository.GetSubscription(client);
+            var subForPush = new PushSubscription(sub.Endpoint, sub.P256DH, sub.Auth);
+
+
+            if (sub == null)
+                return BadRequest("Client not found");
+
+            var subject = configuration["VAPID:subject"];
+            var publicKey = configuration["VAPID:publicKey"];
+            var privateKey = configuration["VAPID:privateKey"];
+
+            var vapidDetails = new VapidDetails(subject, publicKey, privateKey);
+
+            var webPushClient = new WebPushClient();
+
+            try
+            {
+                webPushClient.SendNotification(subForPush, message, vapidDetails);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest("some error in pushing occured, and it is: " + e.Message);
+            }
+
+            return View(subscriptionRepository.GetClientNames());
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
