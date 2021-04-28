@@ -2,15 +2,20 @@
 
     let $descriptions = $(".card-text");
 
-    $('.card-title').each(function (index) { 
-
+    $('.card-title').each(async function (index) {
+        await playSound("http://localhost:14919/js/notification_sound.mp3");
         const notification = new Notification("Alarm", {
             body: $($descriptions[index]).text()
         });
     });
 }
 
-console.log(Notification.permission);
+async function playSound(url) {
+    $('body').append(`<audio id="myAudio" src="${url}">`);
+    document.getElementById("myAudio").play();
+    await new Promise(r => setTimeout(r, 2000));
+    $('audio').remove('#myAudio');
+}
 
 $('document').ready(() => {
     console.log("in doc ready");
@@ -22,7 +27,7 @@ $('document').ready(() => {
             $('#notifyBtn').attr("disabled", true);
             $('#notifyBtn').text("Notifications enabled!")
 
-            setInterval(showNotification, 2000);
+            setTimeout(showNotification, 2000);
         }
 
         else if (Notification.permission !== "denied") {
