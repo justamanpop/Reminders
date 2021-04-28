@@ -71,7 +71,7 @@
         }
 
         //if alarm is due within 31 days
-        if ((alarm.Date.Date - d1.Date.Date).TotalDays <= 31)
+        else if ((alarm.Date.Date - d1.Date.Date).TotalDays <= 31)
         {
             string dayText = "days";
             string hourText = "hours";
@@ -87,7 +87,52 @@
             return res;
         }
 
-        return "difference too long, not implemented for this yet";
+        //if time till alarm less than an year
+        else if ((alarm.Date.Date - d1.Date.Date).TotalDays <= 365)
+        {
+            string monthText = "months";
+
+            LocalDate curr = LocalDate.FromDateTime(DateTime.Now);
+            LocalDate due = LocalDate.FromDateTime(alarm.Date.Date);
+
+            Period period = Period.Between(curr, due);
+
+            string dayText = $"and {period.Days} days left";
+
+            if (period.Months==1)
+                monthText="month";
+
+            if (period.Days == 1)
+                dayText = $"and {period.Days} day left";
+
+            else if (period.Days == 0)
+                dayText = "left";
+
+            return $"Approximately {period.Months} {monthText} {dayText}";
+        }
+
+        else
+        {
+            string yearText = "years";
+
+            LocalDate curr = LocalDate.FromDateTime(DateTime.Now);
+            LocalDate due = LocalDate.FromDateTime(alarm.Date.Date);
+
+            Period period = Period.Between(curr, due);
+
+            string monthText = $"and {period.Months} months left";
+
+            if (period.Years == 1)
+                yearText = "year";
+
+            if (period.Months == 1)
+                monthText = $"and {period.Months} month left";
+
+            else if (period.Days == 0)
+                monthText = "left";
+
+            return $"Approximately {period.Years} {yearText} {monthText}";
+        }
     }
 
     //display 0x instead of just x if x is <10, like 05 instead of 5
