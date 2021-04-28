@@ -17,11 +17,12 @@
 {
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">@alarm.Time.Hour:@FormattedMinute(alarm.Time.Minute)</h5> <h3>@FormattedDate(alarm)</h3>
+            <h2 class="card-title">@alarm.Time.Hour:@FormattedMinute(alarm.Time.Minute)</h2> <h5>@FormattedDate(alarm)</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="timeTillEvent">@GetRemainingTime(alarm)</h6>
             <p class="card-text">@alarm.Description</p>
             <a asp-controller="Alarm" asp-action="Edit" asp-route-id="@alarm.Id" class="card-link">Edit</a>
             <a href="#" class="card-link">Another link</a>
+            <input type="hidden" class="fullDate" value="@StructuredDate(alarm.Date, alarm.Time)"/>
         </div>
     </div>
 }
@@ -164,5 +165,10 @@
         {
             return $"{alarm.Date.Day}/{alarm.Date.Month}/{alarm.Date.Year}";
         }
+    }
+
+    string StructuredDate(DateTime date, DateTime time)
+    {
+        return $"{date.Year.ToString()} {date.Month.ToString()} {date.Day.ToString()} {time.Hour.ToString()} {time.Minute.ToString()}";
     }
 }
