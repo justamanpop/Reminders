@@ -21,7 +21,6 @@ namespace Reminders.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
         public IActionResult Add()
         {
             return View();
@@ -31,16 +30,16 @@ namespace Reminders.Controllers
         public IActionResult Add(SampleTimeViewModel alarm)
         {
             var alarmToAdd = mapper.Map<SampleTimeModel>(alarm);
-            
-            alarmRepository.Add(alarmToAdd);
-            
-            if(ModelState.IsValid)
-                return RedirectToAction("Index","Home");
+
+            if (ModelState.IsValid)
+            {
+                alarmRepository.Add(alarmToAdd);
+                return RedirectToAction("Index", "Home");
+            }
 
             return View();
         }
 
-        [HttpGet("edit/{id}")]
         public IActionResult Edit(int id)
         {
             var alarmEntity = alarmRepository.Get(id);
@@ -55,12 +54,19 @@ namespace Reminders.Controllers
         {
             var alarmToUpdate = mapper.Map<SampleTimeModel>(alarm);
 
-            bool res=alarmRepository.Update(alarmToUpdate);
 
-            if (res)
-                return RedirectToAction("Index", "Home");
 
-            return View("Error");
+            if (ModelState.IsValid)
+            {
+                bool res = alarmRepository.Update(alarmToUpdate);
+                if (res)
+                    return RedirectToAction("Index", "Home");
+
+                return View("Error");
+
+            }
+
+            return View();
         }
 
         [HttpGet("delete/{id}")]

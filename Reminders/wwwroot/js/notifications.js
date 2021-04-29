@@ -4,6 +4,7 @@ function showNotification() {
 
     let $descriptions = $(".card-text");
     let $dueDates = $("input.fullDate");
+    let $cards = $("div.card");
 
     let now = new Date();
 
@@ -15,6 +16,8 @@ function showNotification() {
             const notification = new Notification("Alarm", {
                 body: $($descriptions[index]).text()
             });
+
+            $($cards[index]).remove();
         }
 
         else {

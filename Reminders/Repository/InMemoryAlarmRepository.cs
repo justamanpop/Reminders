@@ -13,14 +13,19 @@ namespace Reminders.Repository
 
         public InMemoryAlarmRepository()
         {
-            //Add(new SampleTimeModel { Hour = 20, Minute = 20, Description="Buy orange juice", Date=  DateTime.Now.Date.AddDays(1) });
+            Add(new SampleTimeModel { Hour = 20, Minute = 20, Description = "Buy orange juice", Date = DateTime.Now.Date.AddDays(1) });
 
             Add(new SampleTimeModel { Hour = 18, Minute = 40, Description = "Walk the dog", Date = DateTime.Now.Date });
 
-            //Add(new SampleTimeModel { Hour = 21, Minute = 00, Description = "Watch the match", Date = DateTime.Now.Date.AddDays(32) });
+            Add(new SampleTimeModel { Hour = 21, Minute = 00, Description = "Watch the match", Date = DateTime.Now.Date.AddDays(32) });
 
-            //Add(new SampleTimeModel { Hour = 22, Minute = 15, Description = "Sleep", Date = 
-            //    DateTime.Now.Date.AddDays(800) });
+            Add(new SampleTimeModel
+            {
+                Hour = 22,
+                Minute = 15,
+                Description = "Sleep",
+                Date = DateTime.Now.Date.AddDays(800)
+            });
         }
 
         public List<SampleTimeModel> Alarms { get; set; } = new List<SampleTimeModel>();
@@ -59,13 +64,16 @@ namespace Reminders.Repository
 
         public bool Update(SampleTimeModel newAlarm)
         {
-            var alarm= Alarms.FirstOrDefault(a => a.Id == newAlarm.Id);
+            for (int i = 0; i < Alarms.Count(); i++)
+            {
+                if (Alarms[i].Id == newAlarm.Id)
+                {
+                    Alarms[i] = newAlarm;
+                    return true;
+                }
+            }
 
-            if (alarm == null)
-                return false;
-
-            alarm = newAlarm;
-            return true;
+            return false;
         }
     }
 }

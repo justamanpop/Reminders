@@ -19,6 +19,9 @@ namespace Reminders.Attributes
             if (inputDate < now.Date)
                 return new ValidationResult("Date entered is before today's date.");
 
+            else if(inputDate > now.Date)
+                return ValidationResult.Success;
+
             //temp will hold today's date but the time is alarm's time
             DateTime temp = DateTime.Now.Date;
 
