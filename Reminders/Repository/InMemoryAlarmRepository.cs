@@ -36,6 +36,17 @@ namespace Reminders.Repository
             return true;
         }
 
+        public bool Delete(int id)
+        {
+            var toBeDeleted = Alarms.FirstOrDefault(a => a.Id == id);
+
+            if (toBeDeleted == null)
+                return false;
+
+            Alarms.Remove(toBeDeleted);
+            return true;
+        }
+
         public SampleTimeModel Get(int id)
         {
             return Alarms.FirstOrDefault(a => a.Id == id);

@@ -1,0 +1,37 @@
+﻿@model Reminders.ViewModels.SampleTimeViewModel
+    
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Delete</h1>
+            <p>
+                Confirm that you want to delete this alarm
+            </p>
+        </div>
+    </div>
+
+    <hr />
+    
+        <div class="form-group">
+            <label asp-for="Time" class="control-label"></label>
+            <span class="form-control">@Model.Time.ToString("HH:mm")</span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Date" class="control-label"></label>
+            <span class="form-control">@Model.Date.ToString("yyyy-MM-dd")</span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <span class="form-control">@Model.Description</span>
+        </div>
+
+        <form asp-action="DeleteConfirmed">
+            <input type="hidden" name="id" value="@Model.Id" />
+            
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-primary" />
+            </div>
+        </form>

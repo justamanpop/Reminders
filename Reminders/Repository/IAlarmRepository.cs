@@ -13,5 +13,6 @@ namespace Reminders.Repository
         SampleTimeModel Get(int id);
         bool Add(SampleTimeModel alarm);
         bool Update(SampleTimeModel alarm);
+        bool Delete(int id);
     }
 }

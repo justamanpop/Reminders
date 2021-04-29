@@ -40,7 +40,7 @@ namespace Reminders.Controllers
             return View();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("edit/{id}")]
         public IActionResult Edit(int id)
         {
             var alarmEntity = alarmRepository.Get(id);
@@ -61,6 +61,27 @@ namespace Reminders.Controllers
                 return RedirectToAction("Index", "Home");
 
             return View("Error");
+        }
+
+        [HttpGet("delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var alarmEntity = alarmRepository.Get(id);
+
+            var alarmVM = mapper.Map<SampleTimeViewModel>(alarmEntity);
+
+            return View(alarmVM);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            bool res = alarmRepository.Delete(id);
+
+            if (res)
+                return RedirectToAction("Index", "Home");
+
+            return NotFound();
         }
     }
 }

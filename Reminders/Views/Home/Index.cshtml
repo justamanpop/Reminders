@@ -21,7 +21,7 @@
             <h6 class="card-subtitle mb-2 text-muted" id="timeTillEvent">@GetRemainingTime(alarm)</h6>
             <p class="card-text">@alarm.Description</p>
             <a asp-controller="Alarm" asp-action="Edit" asp-route-id="@alarm.Id" class="card-link">Edit</a>
-            <a href="#" class="card-link">Another link</a>
+            <a asp-controller="Alarm" asp-action="Delete" asp-route-id="@alarm.Id" class="card-link">Delete</a>
             <input type="hidden" class="fullDate" value="@StructuredDate(alarm.Date, alarm.Time)"/>
         </div>
     </div>
