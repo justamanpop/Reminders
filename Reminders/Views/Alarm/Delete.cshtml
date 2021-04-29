@@ -31,7 +31,9 @@
         <form asp-action="DeleteConfirmed">
             <input type="hidden" name="id" value="@Model.Id" />
             
-            <div class="form-group">
+            <div class="form-group btn-group">
                 <input type="submit" value="Delete" class="btn btn-primary" />
+                &nbsp; &nbsp; &nbsp;
+                <button type="submit" class="btn btn-primary" asp-action="Index" asp-controller="Home">Go Back </button>
             </div>
         </form>
