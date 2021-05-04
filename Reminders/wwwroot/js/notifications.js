@@ -5,19 +5,23 @@ function showNotification() {
     let $descriptions = $(".card-text");
     let $dueDates = $("input.fullDate");
     let $cards = $("div.card");
-
     let now = new Date();
 
     $('.card-title').each(async function (index) {
-
         if (isSameTime($dueDates[index], now)) {
             console.log(`the times ${$($dueDates[index]).attr('value')} and ${now} DO match!`);
             await playSound("http://localhost:14919/js/notification_sound.mp3");
             const notification = new Notification("Alarm", {
                 body: $($descriptions[index]).text()
             });
-
             $($cards[index]).remove();
+
+            $.ajax({
+                url: '/api/alarm/delete',
+                data: { id: parseInt($($cards[index]).attr("data-id")) }
+            }).done(function () {
+                alert('Added');
+            });
         }
 
         else {
@@ -25,6 +29,7 @@ function showNotification() {
         }
         
     });
+
 }
 
 function isSameTime(dateVals, now) {
@@ -61,6 +66,7 @@ async function playSound(url) {
     await new Promise(r => setTimeout(r, 2000));
     $('audio').remove('#myAudio');
 }
+
 
 $('document').ready(() => {
     console.log("in doc ready");

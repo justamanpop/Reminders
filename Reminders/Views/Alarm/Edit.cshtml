@@ -17,7 +17,7 @@
 
             <div class="form-group">
                 <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" type="time" class="form-control" value="@DateTime.Now.ToString("HH:mm")" />
+                <input asp-for="Time" type="time" class="form-control" value="@Model.Time.ToString("HH:mm")" />
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
 

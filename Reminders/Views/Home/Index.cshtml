@@ -15,7 +15,7 @@
 
 @foreach (var alarm in Model)
 {
-    <div class="card" style="width: 18rem;">
+    <div class="card" data-id="@alarm.Id" style="width: 18rem;">
         <div class="card-body">
             <h2 class="card-title">@alarm.Time.Hour:@FormattedMinute(alarm.Time.Minute)</h2> <h5>@FormattedDate(alarm)</h5>
             <h6 class="card-subtitle mb-2 text-muted" id="timeTillEvent">@GetRemainingTime(alarm)</h6>
