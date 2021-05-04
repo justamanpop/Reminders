@@ -59,7 +59,10 @@ namespace Reminders.Repository
 
         public List<SampleTimeModel> GetAll()
         {
-            return Alarms;
+            return Alarms
+                .OrderBy(a=>a.Hour)
+                .ThenBy(a=>a.Minute)
+                .ToList();
         }
 
         public bool Update(SampleTimeModel newAlarm)
@@ -74,6 +77,11 @@ namespace Reminders.Repository
             }
 
             return false;
+        }
+
+        Task<bool> IAlarmRepository.Add(SampleTimeModel alarm)
+        {
+            throw new NotImplementedException();
         }
     }
 }

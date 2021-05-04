@@ -15,3 +15,8 @@ migrate getREmainingTime from C# to js, or do above to solve the problem.
 
 add support for daily alarms too, currently all these are one time alams. maybe have a drop down menu to choose
 type of menu, and add this as a field to my models and view models.
+
+sort alarms based on time of day (easy, i guess, just linq orderby will do) DONE
+
+i think just migrate from inmemory to EF core  database now. i'll still keep in memory for convinience's sake 
+though, to maybe test my code when i'm making small changes

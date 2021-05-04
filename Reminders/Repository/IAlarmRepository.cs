@@ -11,7 +11,7 @@ namespace Reminders.Repository
     {
         List<SampleTimeModel> GetAll();
         SampleTimeModel Get(int id);
-        bool Add(SampleTimeModel alarm);
+        Task<bool> Add(SampleTimeModel alarm);
         bool Update(SampleTimeModel alarm);
         bool Delete(int id);
     }

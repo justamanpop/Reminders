@@ -22,7 +22,7 @@ function showNotification() {
                 url: `http://localhost:14919/api/alarm/delete/${idToRemove}`,
                 method: 'DELETE'
             }).done(function () {
-                alert('Your alarm has been deleted.');
+                console.log('Your alarm has been deleted.');
             });
         }
 

@@ -19,12 +19,5 @@ namespace Reminders.Models
 
         }
 
-        public SampleTimeModel(int hour, int minute, string description,int id)
-        {
-            Hour = hour;
-            Minute = minute;
-            Id = id;
-            Description = description;
-        }
     }
 }
