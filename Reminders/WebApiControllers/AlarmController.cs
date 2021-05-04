@@ -25,6 +25,7 @@ namespace Reminders.WebApiControllers
         [HttpDelete("{id}")]
         public StatusCodeResult Delete(int id)
         {
+
             var alarm = alarmRepository.Get(id);
 
             if (alarm == null)

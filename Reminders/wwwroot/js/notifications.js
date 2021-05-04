@@ -16,11 +16,13 @@ function showNotification() {
             });
             $($cards[index]).remove();
 
+            idToRemove = $($cards[index]).attr("data-id");
+
             $.ajax({
-                url: '/api/alarm/delete',
-                data: { id: parseInt($($cards[index]).attr("data-id")) }
+                url: `http://localhost:14919/api/alarm/delete/${idToRemove}`,
+                method: 'DELETE'
             }).done(function () {
-                alert('Added');
+                alert('Your alarm has been deleted.');
             });
         }
 
@@ -55,8 +57,6 @@ function isSameTime(dateVals, now) {
         return true;
     }
 
-
-
     return false;
 }
 
@@ -69,9 +69,7 @@ async function playSound(url) {
 
 
 $('document').ready(() => {
-    console.log("in doc ready");
     $('#notifyBtn').click(async () => {
-        console.log("I was reached")
 
         if (Notification.permission === "granted") {
             $('#notifyBtn').removeClass("btn-primary");
@@ -80,16 +78,16 @@ $('document').ready(() => {
             $('#notifyBtn').text("Notifications enabled!")
 
             clearInterval(myInterval);
-            myInterval=setInterval(showNotification, 1000*60);
+            myInterval=setInterval(showNotification, 1000*30);
         }
 
         else if (Notification.permission !== "denied") {
             Notification.requestPermission().then(permission => {
                 clearInterval(myInterval);
-                setInterval(showNotification, 1000 * 60);
+                setInterval(showNotification, 1000 * 30);
             })
-
             //showNotification();
         }
+
     });
 });
