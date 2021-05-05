@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reminders.Enums;
 
 namespace Reminders.Models
 {
@@ -13,6 +14,7 @@ namespace Reminders.Models
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
+        public AlarmType AType { get; set; }
 
         public SampleTimeModel()
         {

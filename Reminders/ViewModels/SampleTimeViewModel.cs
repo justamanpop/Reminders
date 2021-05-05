@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Reminders.Attributes;
+using Reminders.Enums;
 
 namespace Reminders.ViewModels
 {
@@ -18,6 +19,7 @@ namespace Reminders.ViewModels
         public DateTime Time { get; set; }
         [Required]
         public DateTime Date { get; set; }
+        public AlarmType AType { get; set; }
         public SampleTimeViewModel()
         {
 
