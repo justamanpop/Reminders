@@ -10,9 +10,9 @@ namespace Reminders.Repository
     public interface IAlarmRepository
     {
         List<SampleTimeModel> GetAll();
-        SampleTimeModel Get(int id);
+        Task<SampleTimeModel> Get(int id);
         Task<bool> Add(SampleTimeModel alarm);
-        bool Update(SampleTimeModel alarm);
-        bool Delete(int id);
+        Task<bool> Update(SampleTimeModel alarm);
+        Task<bool> Delete(int id);
     }
 }

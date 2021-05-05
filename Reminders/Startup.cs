@@ -31,8 +31,8 @@ namespace Reminders
 
             services.AddControllersWithViews();
             services.Add(
-                new ServiceDescriptor(typeof(IAlarmRepository), typeof(DbAlarmRepository),ServiceLifetime.Scoped));
-            
+                new ServiceDescriptor(typeof(IAlarmRepository), typeof(DbAlarmRepository), ServiceLifetime.Scoped));
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         }

@@ -22,20 +22,24 @@ namespace Reminders.Repository
             return true;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var toBeDeleted = Alarms.FirstOrDefault(a => a.Id == id);
+            var toBeDeleted = context.Alarms.Find(id);
 
             if (toBeDeleted == null)
                 return false;
 
-            Alarms.Remove(toBeDeleted);
+            context.Alarms.Remove(toBeDeleted);
+
+            await context.SaveChangesAsync();
+
             return true;
         }
 
-        public SampleTimeModel Get(int id)
+        public async Task<SampleTimeModel> Get(int id)
         {
-            return Alarms.FirstOrDefault(a => a.Id == id);
+            var res= await context.Alarms.FindAsync(id);
+            return res;
         }
 
         public List<SampleTimeModel> GetAll()
@@ -46,18 +50,20 @@ namespace Reminders.Repository
                 .ToList();
         }
 
-        public bool Update(SampleTimeModel newAlarm)
+        public async Task<bool> Update(SampleTimeModel newAlarm)
         {
-            for (int i = 0; i < Alarms.Count(); i++)
+            var entity = await context.Alarms.FindAsync(newAlarm.Id);
+            
+            if (entity == null)
             {
-                if (Alarms[i].Id == newAlarm.Id)
-                {
-                    Alarms[i] = newAlarm;
-                    return true;
-                }
+                return false;
             }
 
-            return false;
+            context.Entry(entity).CurrentValues.SetValues(newAlarm);
+
+            await context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

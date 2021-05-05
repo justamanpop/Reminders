@@ -27,22 +27,22 @@ namespace Reminders.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(SampleTimeViewModel alarm)
+        public async Task<IActionResult> Add(SampleTimeViewModel alarm)
         {
             var alarmToAdd = mapper.Map<SampleTimeModel>(alarm);
 
             if (ModelState.IsValid)
             {
-                alarmRepository.Add(alarmToAdd);
+                await alarmRepository.Add(alarmToAdd);
                 return RedirectToAction("Index", "Home");
             }
 
             return View();
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var alarmEntity = alarmRepository.Get(id);
+            var alarmEntity = await alarmRepository.Get(id);
 
             var alarmVM = mapper.Map<SampleTimeViewModel>(alarmEntity);
 
@@ -50,15 +50,14 @@ namespace Reminders.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(SampleTimeViewModel alarm)
+        public async Task<IActionResult> Edit(SampleTimeViewModel alarm)
         {
             var alarmToUpdate = mapper.Map<SampleTimeModel>(alarm);
 
-
-
             if (ModelState.IsValid)
             {
-                bool res = alarmRepository.Update(alarmToUpdate);
+                bool res = await alarmRepository.Update(alarmToUpdate);
+                
                 if (res)
                     return RedirectToAction("Index", "Home");
 
@@ -69,10 +68,9 @@ namespace Reminders.Controllers
             return View();
         }
 
-        [HttpGet("delete/{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var alarmEntity = alarmRepository.Get(id);
+            var alarmEntity = await alarmRepository.Get(id);
 
             var alarmVM = mapper.Map<SampleTimeViewModel>(alarmEntity);
 
@@ -80,9 +78,9 @@ namespace Reminders.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            bool res = alarmRepository.Delete(id);
+            bool res = await alarmRepository.Delete(id);
 
             if (res)
                 return RedirectToAction("Index", "Home");

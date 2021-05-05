@@ -83,5 +83,20 @@ namespace Reminders.Repository
         {
             throw new NotImplementedException();
         }
+
+        Task<bool> IAlarmRepository.Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<SampleTimeModel> IAlarmRepository.Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IAlarmRepository.Update(SampleTimeModel alarm)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

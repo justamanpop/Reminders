@@ -23,15 +23,15 @@ namespace Reminders.WebApiControllers
         }
 
         [HttpDelete("{id}")]
-        public StatusCodeResult Delete(int id)
+        public async Task<StatusCodeResult> Delete(int id)
         {
 
-            var alarm = alarmRepository.Get(id);
+            var alarm = await alarmRepository.Get(id);
 
             if (alarm == null)
                 return NotFound();
 
-            bool res = alarmRepository.Delete(id);
+            bool res = await alarmRepository.Delete(id);
 
             if (res)
                 return Ok();
