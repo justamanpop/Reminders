@@ -69,25 +69,42 @@ async function playSound(url) {
 
 
 $('document').ready(() => {
-    $('#notifyBtn').click(async () => {
+    console.log("onload");
 
-        if (Notification.permission === "granted") {
-            $('#notifyBtn').removeClass("btn-primary");
-            $('#notifyBtn').addClass("btn-secondary");
-            $('#notifyBtn').attr("disabled", true);
-            $('#notifyBtn').text("Notifications enabled!")
+    if (Notification.permission === "granted") {
+        console.log("granted");
+        $('#notifyBtn').removeClass("btn-primary");
+        $('#notifyBtn').addClass("btn-secondary");
+        $('#notifyBtn').attr("disabled", true);
+        $('#notifyBtn').text("Notifications enabled!")
 
-            clearInterval(myInterval);
-            myInterval=setInterval(showNotification, 1000*30);
-        }
+        clearInterval(myInterval);
+        myInterval = setInterval(showNotification, 1000 * 30);
+    }
 
-        else if (Notification.permission !== "denied") {
-            Notification.requestPermission().then(permission => {
+    else {
+        $('#notifyBtn').click(async () => {
+
+            if (Notification.permission === "granted") {
+                console.log("granted");
+                $('#notifyBtn').removeClass("btn-primary");
+                $('#notifyBtn').addClass("btn-secondary");
+                $('#notifyBtn').attr("disabled", true);
+                $('#notifyBtn').text("Notifications enabled!")
+
                 clearInterval(myInterval);
-                setInterval(showNotification, 1000 * 30);
-            })
-            //showNotification();
-        }
+                myInterval = setInterval(showNotification, 1000 * 30);
+            }
+
+            else if (Notification.permission !== "denied") {
+                console.log("not yet granted");
+                Notification.requestPermission().then(permission => {
+                    clearInterval(myInterval);
+                    setInterval(showNotification, 1000 * 30);
+                })
+                //showNotification();
+            }
+        });
+    }
 
     });
-});
