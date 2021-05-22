@@ -39,5 +39,25 @@ namespace Reminders.WebApiControllers
             return StatusCode(500);
 
         }
+
+        [HttpPut("{id}")]
+        public async Task<StatusCodeResult> UpdateByOneDay(int id)
+        {
+
+            var alarm = await alarmRepository.Get(id);
+
+            if (alarm == null)
+                return NotFound();
+
+            alarm.Date = alarm.Date.AddDays(1);
+
+            bool res = await alarmRepository.Update(alarm);
+
+            if (res)
+                return Ok();
+
+            return StatusCode(500);
+
+        }
     }
 }

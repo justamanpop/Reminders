@@ -16,8 +16,8 @@ function showNotification() {
             });
 
             let alarmType = $($types[index]).attr('value');
-            console.log("curr alrm checked has type " + alarmType)
-            if (alarmType == 'OneTime') {
+
+            if (alarmType === 'OneTime') {
                 console.log("in one time conditional");
                 $($cards[index]).remove();
 
@@ -31,8 +31,19 @@ function showNotification() {
                 });
             }
 
-            else if (alarmType == 'Daily') {
+            else if (alarmType === 'Daily') {
                 console.log("in daily conditional");
+                idToUpdate = $($cards[index]).attr("data-id");
+
+                $.ajax({
+                    url: `http://localhost:14919/api/alarm/updateByOneDay/${idToUpdate}`,
+                    method: 'PUT'
+                }).done(async function () {
+                    console.log('Daily alarm has been updated.');
+                    await new Promise(r => setTimeout(r, 4000));
+                    document.location.reload(true);
+                });
+
             }
 
             else {
@@ -93,7 +104,7 @@ $('document').ready(() => {
         $('#notifyBtn').text("Notifications enabled!")
 
         clearInterval(myInterval);
-        myInterval = setInterval(showNotification, 1000 * 2);
+        myInterval = setInterval(showNotification, 1000 * 5);
     }
 
     else {
@@ -107,14 +118,14 @@ $('document').ready(() => {
                 $('#notifyBtn').text("Notifications enabled!")
 
                 clearInterval(myInterval);
-                myInterval = setInterval(showNotification, 1000 * 2);
+                myInterval = setInterval(showNotification, 1000 * 5);
             }
 
             else if (Notification.permission !== "denied") {
                 console.log("not yet granted");
                 Notification.requestPermission().then(permission => {
                     clearInterval(myInterval);
-                    setInterval(showNotification, 1000 * 2);
+                    setInterval(showNotification, 1000 * 5);
                 })
                 //showNotification();
             }
