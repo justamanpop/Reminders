@@ -28,6 +28,11 @@
             <span class="form-control">@Model.Description</span>
         </div>
 
+        <div class="form-group">
+            <label class="control-label">Alarm Type</label>
+            <span class="form-control">@Model.AType</span>
+        </div>
+
         <form asp-action="DeleteConfirmed">
             <input type="hidden" name="id" value="@Model.Id" />
             

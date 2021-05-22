@@ -4,7 +4,7 @@ function showNotification() {
     let $descriptions = $(".card-text");
     let $dueDates = $("input.fullDate");
     let $cards = $("div.card");
-    let $types= $(".input.alarmType")
+    let $types= $("input.alarmType")
     let now = new Date();
 
     $('.card-title').each(async function (index) {
@@ -16,7 +16,7 @@ function showNotification() {
             });
 
             let alarmType = $($types[index]).attr('value');
-
+            console.log("curr alrm checked has type " + alarmType)
             if (alarmType == 'OneTime') {
                 console.log("in one time conditional");
                 $($cards[index]).remove();
@@ -33,6 +33,10 @@ function showNotification() {
 
             else if (alarmType == 'Daily') {
                 console.log("in daily conditional");
+            }
+
+            else {
+                console.log("undefined alarm type, what do we do!");
             }
         }
 
@@ -89,7 +93,7 @@ $('document').ready(() => {
         $('#notifyBtn').text("Notifications enabled!")
 
         clearInterval(myInterval);
-        myInterval = setInterval(showNotification, 1000 * 5);
+        myInterval = setInterval(showNotification, 1000 * 2);
     }
 
     else {
@@ -103,17 +107,18 @@ $('document').ready(() => {
                 $('#notifyBtn').text("Notifications enabled!")
 
                 clearInterval(myInterval);
-                myInterval = setInterval(showNotification, 1000 * 5);
+                myInterval = setInterval(showNotification, 1000 * 2);
             }
 
             else if (Notification.permission !== "denied") {
                 console.log("not yet granted");
                 Notification.requestPermission().then(permission => {
                     clearInterval(myInterval);
-                    setInterval(showNotification, 1000 * 5);
+                    setInterval(showNotification, 1000 * 2);
                 })
                 //showNotification();
             }
+
         });
     }
 
