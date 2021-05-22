@@ -1,10 +1,10 @@
 ﻿var myInterval;
 
 function showNotification() {
-
     let $descriptions = $(".card-text");
     let $dueDates = $("input.fullDate");
     let $cards = $("div.card");
+    let $types= $(".input.alarmType")
     let now = new Date();
 
     $('.card-title').each(async function (index) {
@@ -14,16 +14,26 @@ function showNotification() {
             const notification = new Notification("Alarm", {
                 body: $($descriptions[index]).text()
             });
-            $($cards[index]).remove();
 
-            idToRemove = $($cards[index]).attr("data-id");
+            let alarmType = $($types[index]).attr('value');
 
-            $.ajax({
-                url: `http://localhost:14919/api/alarm/delete/${idToRemove}`,
-                method: 'DELETE'
-            }).done(function () {
-                console.log('Your alarm has been deleted.');
-            });
+            if (alarmType == 'OneTime') {
+                console.log("in one time conditional");
+                $($cards[index]).remove();
+
+                idToRemove = $($cards[index]).attr("data-id");
+
+                $.ajax({
+                    url: `http://localhost:14919/api/alarm/delete/${idToRemove}`,
+                    method: 'DELETE'
+                }).done(function () {
+                    console.log('Your alarm has been deleted.');
+                });
+            }
+
+            else if (alarmType == 'Daily') {
+                console.log("in daily conditional");
+            }
         }
 
         else {
@@ -79,7 +89,7 @@ $('document').ready(() => {
         $('#notifyBtn').text("Notifications enabled!")
 
         clearInterval(myInterval);
-        myInterval = setInterval(showNotification, 1000 * 30);
+        myInterval = setInterval(showNotification, 1000 * 5);
     }
 
     else {
@@ -93,14 +103,14 @@ $('document').ready(() => {
                 $('#notifyBtn').text("Notifications enabled!")
 
                 clearInterval(myInterval);
-                myInterval = setInterval(showNotification, 1000 * 30);
+                myInterval = setInterval(showNotification, 1000 * 5);
             }
 
             else if (Notification.permission !== "denied") {
                 console.log("not yet granted");
                 Notification.requestPermission().then(permission => {
                     clearInterval(myInterval);
-                    setInterval(showNotification, 1000 * 30);
+                    setInterval(showNotification, 1000 * 5);
                 })
                 //showNotification();
             }
