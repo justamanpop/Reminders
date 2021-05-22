@@ -13,12 +13,17 @@ namespace Reminders.ViewModels
     public class SampleTimeViewModel
     {
         public int Id { get; set; }
+        
         [Required]
         public string Description { get; set; }
+        
         [Required]
         public DateTime Time { get; set; }
+        
         [Required]
         public DateTime Date { get; set; }
+        
+        [Required]
         public AlarmType AType { get; set; }
         public SampleTimeViewModel()
         {

@@ -33,6 +33,13 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
+            <div class="form-group">
+                <label class="control-label">Alarm Type</label>
+                <select asp-for="AType" asp-items="@Html.GetEnumSelectList<AlarmType>()" class="form-control">
+                </select>
+                <span asp-validation-for="AType" class="text-danger"></span>
+            </div>
+
             <div class="form-group btn-group">
                 <input type="submit" value="Edit" class="btn btn-primary" />
                 &nbsp; &nbsp; &nbsp;

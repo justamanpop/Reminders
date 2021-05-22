@@ -20,3 +20,6 @@ sort alarms based on time of day (easy, i guess, just linq orderby will do) DONE
 
 i think just migrate from inmemory to EF core  database now. i'll still keep in memory for convinience's sake 
 though, to maybe test my code when i'm making small changes DONE
+
+auto cleanup function in js mb so every time page loads, we check if any alarms are past due datetime
+and remove those
