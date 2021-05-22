@@ -23,3 +23,10 @@ though, to maybe test my code when i'm making small changes DONE
 
 auto cleanup function in js mb so every time page loads, we check if any alarms are past due datetime
 and remove those
+
+instead of deleting alarm when it triggers for one time, add a var that has valeus enabled/disabled. it gets
+disabled and displayed with greyed out text instead. if use wants to enable it, it will go to add page, and
+he picks a new time for it?
+
+bug fix delete from db api
+

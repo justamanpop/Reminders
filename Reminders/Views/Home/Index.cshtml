@@ -24,7 +24,8 @@
             <p class="card-text">@alarm.Description</p>
             <a asp-controller="Alarm" asp-action="Edit" asp-route-id="@alarm.Id" class="card-link">Edit</a>
             <a href="/Alarm/Delete/@alarm.Id" class="card-link">Delete</a>
-            <input type="hidden" class="fullDate" value="@StructuredDate(alarm.Date, alarm.Time)"/>
+            <input type="hidden" class="fullDate" value="@StructuredDate(alarm.Date, alarm.Time)" />
+            <input type="hidden" class="alarmType" value="@alarm.AType" />
         </div>
     </div>
 }
@@ -151,6 +152,12 @@
     //display date in dd/mm/yyyy, but return text 'today' if the date is today, and tomorrow, if date is tomorrow.
     string FormattedDate(Reminders.ViewModels.SampleTimeViewModel alarm)
     {
+        if (alarm.AType==AlarmType.Daily)
+        {
+            return "Daily";
+        }
+
+
         DateTime now = DateTime.Now;
 
         if(alarm.Date.Date==now.Date.Date)
