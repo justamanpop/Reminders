@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Reminders.Models;
@@ -12,6 +13,7 @@ using Reminders.ViewModels;
 
 namespace Reminders.Controllers
 {
+    [Authorize]
     public class TestController : Controller
     {
         private readonly ILogger<HomeController> _logger;

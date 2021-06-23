@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reminders.Models;
 using Reminders.Repository;
@@ -10,6 +11,7 @@ using Reminders.ViewModels;
 
 namespace Reminders.Controllers
 {
+    [Authorize]
     public class AlarmController:Controller
     {
         private readonly IAlarmRepository alarmRepository;

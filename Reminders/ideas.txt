@@ -30,3 +30,7 @@ he picks a new time for it?
 
 bug fix delete from db api
 
+have alarms be per account instead of one for all (probably involves adding a userId field to each entry)
+
+
+
